@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
+
 import reactor.core.publisher.Mono;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -47,6 +47,7 @@ public class AccountService {
                 .retrieve()
                 .bodyToMono(String.class);
     }
+
 
     public Mono<String> validateToken(Object tokenReqRes) {
         return webClientBuilder.build()
@@ -93,28 +94,3 @@ public class AccountService {
         return accountRepository.save(account);
     }
 }
-
-
-//    @Value("${bank.interest.rate.endpoint}")
-//    private String bankInterestRateEndpoint;
-//
-//    public Double getInterestRate() {
-//        ResponseEntity<Double> response = restTemplate.getForEntity(bankInterestRateEndpoint, Double.class);
-//        if (response.getBody() != null) {
-//            return response.getBody();
-//        } else {
-//            throw new RuntimeException("Failed to fetch interest rate. Response body is null.");
-//        }
-//    }
-
-
-//        Account account = getAccount(id).orElseThrow(() -> new RuntimeException("Account not found"));
-//        Double interestRate = Double.valueOf(String.valueOf(getInterestRate()));
-//        if (interestRate == null) {
-//            throw new RuntimeException("Failed to fetch interest rate");
-//        }
-//        double interestAmount = amount * (interestRate / 100);
-//        double newBalance = account.getBalance() + amount + interestAmount;
-//
-//        account.setBalance(newBalance);
-//        return accountRepository.save(account);
